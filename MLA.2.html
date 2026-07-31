@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiflex Learning Academy</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #0284c7;
+            --accent: #f59e0b;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Logo Section */
+        header {
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .logo-img {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 0.5rem;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Main Content Layout */
+        .section {
+            padding: 5rem 2rem 4rem 2rem;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section:nth-child(even) {
+            background-color: #f1f5f9;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            max-width: 750px;
+            margin-bottom: 1.5rem;
+            color: #475569;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            width: 100%;
+            text-align: left;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border-top: 4px solid var(--secondary);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        /* Trivia Section Styles */
+        .trivia-container {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 700px;
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .trivia-question {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .trivia-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trivia-btn {
+            background: var(--bg-light);
+            border: 2px solid #cbd5e1;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .trivia-btn:hover {
+            background: #e2e8f0;
+            border-color: var(--secondary);
+        }
+
+        .trivia-feedback {
+            font-weight: 600;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .trivia-feedback.correct {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            display: block;
+        }
+
+        .trivia-feedback.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            display: block;
+        }
+
+        .trivia-nav-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .trivia-nav-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Contact Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        input, textarea {
+            padding: 0.85rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+        button[type="submit"] {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--secondary);
+        }
+
+        footer {
+            background: #0f172a;
+            color: var(--white);
+            text-align: center.important;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+   
+
+    <!-- Header containing Logo and Navigation Links -->
+     <div class="logo-area">
+                <!-- LOGO INSTRUCTION: Replace src with your image file path (e.g., logo.png) -->
+                <img src="logo.jpg" alt="School Logo" id="school-logo">
+                <h2>Multiflex Academy</h2>
+            </div>
+        <nav>
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#info">Programs & Info</a>
+            <a href="#trivia">Trivia Challenge</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    
+
+    <!-- HOME SECTION -->
+    <section id="home" class="section">
+        <h2>Welcome to the Future of Education</h2>
+        <p>At Multiflex Learning Academy, we break the mold of traditional schooling by offering an innovative, dynamic, and flexible microschool model. We foster independent leaders through modern, student-centered learning experiences.</p>
+        <img src="mla1.jpg" alt="">
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Socratic Seminars</h3>
+                <p>Encouraging deep independent thought, open dialogue, and natural inquiry over routine textbook memorization.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Experiential Outings</h3>
+                <p>Turning the world into a living classroom via weekly hands-on fieldwork, nature exploration, and localized projects.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Life Skills & STEM</h3>
+                <p>Equipping students with practical day-to-day survival techniques, financial literacy, architecture, and advanced tech competence.</p>
+            </div>
+        </div>
+        <marquee behavior="alternate" direction="left"> <img src="mla2.jpg" alt=""> <img src="mla3.jpg" alt=""> <img src="mla4.jpg" alt=""> <img src="mla5.jpg" alt=""></marquee>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="section">
+        <h2>About Us</h2>
+        <p>Multiflex Learning Academy was designed with a single driving vision: to organic-grow creative and pioneering student mindsets by modernizing education for the 21st century.</p>
+        <p>Our educators serve as supportive mentors and expert guides rather than strict lecturers. By prioritizing project-based benchmarks and emotional well-being—including integrated mindfulness and yoga—we ensure every individual student unlocks their absolute highest potential.</p>
+    </section>
+
+    <!-- PROGRAMS & INFO SECTION -->
+    <section id="info" class="section">
+        <h2>Programs & Information</h2>
+        <p>Our comprehensive curriculum blends rigid academic state standards with unmatched customized freedom. Take a quick look at what we offer our learning community:</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Core Academics</h3>
+                <p>Features creative learning tracks like Super Hero Literature, Chemistry in the Kitchen, Life Skills Math, and World Mythology.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Specialized Electives</h3>
+                <p>Students can dive into unique hands-on tracks including Home Economics Plus, Web Design, Entrepreneurship, and Barn/Agricultural care.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Flexible Scheduling</h3>
+                <p>Hybrid options available combining live in-person mentorship, interactive group cohorts, and independent field research projects.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRIVIA SECTION -->
+    <section id="trivia" class="section">
+        <h2>Academy Trivia Challenge</h2>
+        <p>Test how well you know unique learning concepts and school facts! Select an answer below to see tailored feedback for each question.</p>
+        
+        <div class="trivia-container">
+            <div id="trivia-question-container">
+                <div class="trivia-question" id="question-text">Loading question...</div>
+                <div class="trivia-options" id="options-container"></div>
+                <div id="feedback" class="trivia-feedback"></div>
+                <button id="next-btn" class="trivia-nav-btn" onclick="nextQuestion()">Next Question</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section">
+        <h2>Contact Us</h2>
+        <p>Want to schedule a campus tour or learn more about admissions? Send us a message below and our director team will get back to you shortly!</p>
+        
+        <form onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully.');">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email Address" required>
+            <textarea rows="4" placeholder="How can we help you?" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Multiflex Learning Academy. Empowering Future Leaders. All rights reserved.</p>
+        <!-- ROLLING MOTIVATIONAL FOOTER TICKER (Expanded Quotes & Facts) -->
+        <div class="ticker-wrap">
+            <div class="ticker">
+                <span>🌟 "The expert in anything was once a beginner." — Helen Hayes</span>
+                <span>🚀 Fun Fact: Creative thinking builds stronger, faster neural connection pathways in the developing brain!</span>
+                <span>💡 "Education is the most powerful weapon which you can use to change the world." — Nelson Mandela</span>
+                <span>🎨 Fun Fact: Cross-disciplinary art studies directly enhance complex mathematical problem-solving skills!</span>
+                <span>🔥 "The future belongs to those who believe in the beauty of their dreams." — Eleanor Roosevelt</span>
+                <span>⚡ Fun Fact: Socratic questioning stimulates active analytical reasoning rather than passive memorization!</span>
+                <span>🌱 "Logic will get you from A to B. Imagination will take you everywhere." — Albert Einstein</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Trivia JavaScript with Unique Comments Per Choice -->
+    <script>
+        const triviaData = [
+            {
+                question: "1. What core method do we emphasize instead of forcing students to memorize routine textbooks?",
+                options: [
+                    { text: "Standardized multi-choice testing blocks", feedback: "Not quite! Standard testing is exactly what we move away from to foster genuine organic learning." },
+                    { text: "Socratic Discussions and project-based assessments", correct: true, feedback: "Spot on! Socratic seminars and project assessments give students true research freedom and active inquiry." },
+                    { text: "Silent solo reading for 6 hours straight", feedback: "Incorrect. We heavily emphasize active collaboration, social interaction, and hands-on participation." }
+                ]
+            },
+            {
+                question: "2. Which of the following is part of our unique real-world 'Barn Class' elective options?",
+                options: [
+                    { text: "Commercial flight simulator training", feedback: "Close imagination, but flight sims aren't part of our agricultural barn environment!" },
+                    { text: "Deep-sea scuba diving certification", feedback: "Incorrect, though marine biology is cool, our barn classes are land-based!" },
+                    { text: "Animal care, gardening, and horseback riding", correct: true, feedback: "Correct! Students get direct interaction with animal care, 4-H projects, and sustainable gardening." }
+                ]
+            },
+            {
+                question: "3. What role do our adult educators take on to best support student growth?",
+                options: [
+                    { text: "Strict authoritarian graders", feedback: "Incorrect. We steer clear of traditional, stressful grading systems to cultivate true creative autonomy." },
+                    { text: "Educational coaches and supportive mentors", correct: true, feedback: "Spot on! Our mentors guide learning outcomes rather than acting as standard old-school lecturers." },
+                    { text: "Remote automated computer avatars", feedback: "Not correct! We heavily value authentic face-to-face, live in-person human connection." }
+                ]
+            },
+            {
+                question: "4. What is the primary underlying philosophy of the Multiflex learning model?",
+                options: [
+                    { text: "Strict corporate workforce compliance", feedback: "Incorrect. We are building innovative free-thinkers and dynamic leaders, not cookie-cutter corporate clones." },
+                    { text: "Complete academic neglect of all basic subjects", feedback: "Wrong! We completely integrate certified core state standards, just through much more engaging methods." },
+                    { text: "Learner-centered ownership, flexibility, and 21st-century life skills", correct: true, feedback: "Nailed it! We empower children with real ownership over when, how, and what they master." }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function loadQuestion() {
+            const currentQ = triviaData[currentQuestionIndex];
+            document.getElementById("question-text").innerText = currentQ.question;
+            
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = "";
+            
+            const feedbackEl = document.getElementById("feedback");
+            feedbackEl.className = "trivia-feedback";
+            feedbackEl.innerText = "";
+            
+            document.getElementById("next-btn").style.display = "none";
+
+            currentQ.options.forEach((opt) => {
+                const btn = document.createElement("button");
+                btn.className = "trivia-btn";
+                btn.innerText = opt.text;
+                btn.onclick = () => selectAnswer(opt, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(option, selectedBtn) {
+            const allBtns = document.querySelectorAll(".trivia-btn");
+            allBtns.forEach(b => b.disabled = true); // Disable options after choice
+
+            const feedbackEl = document.getElementById("feedback");
+            feedbackEl.innerText = option.feedback;
+
+            if (option.correct) {
+                feedbackEl.classList.add("correct");
+                selectedBtn.style.background = "#dcfce7";
+                selectedBtn.style.borderColor = "#22c55e";
+            } else {
+                feedbackEl.classList.add("incorrect");
+                selectedBtn.style.background = "#fee2e2";
+                selectedBtn.style.borderColor = "#ef4444";
+                
+                // Highlight the correct answer helper
+                allBtns.forEach(b => {
+                    const matchOpt = triviaData[currentQuestionIndex].options.find(o => o.text === b.innerText);
+                    if (matchOpt && matchOpt.correct) {
+                        b.style.background = "#f0fdf4";
+                        b.style.borderColor = "#86efac";
+                    }
+                });
+            }
+
+            // Show next button or finish message
+            const nextBtn = document.getElementById("next-btn");
+            if (currentQuestionIndex < triviaData.length - 1) {
+                nextBtn.innerText = "Next Question";
+                nextBtn.style.display = "inline-block";
+            } else {
+                nextBtn.innerText = "Restart Trivia";
+                nextBtn.style.display = "inline-block";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= triviaData.length) {
+                currentQuestionIndex = 0; // loop back to start
+            }
+            loadQuestion();
+        }
+
+        // Initialize Trivia on load
+        window.onload = loadQuestion;
+
+        // Smooth active nav switcher on scroll
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
