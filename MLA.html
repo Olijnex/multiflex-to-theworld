@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiflex Learning Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* Background image with a dark overlay for readability */
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #e63946; /* Updated to Red */
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: #e63946; /* Updated to Red */
+        }
+
+        /* Main Content Sections */
+        .page-section {
+            display: none;
+            padding: 140px 10% 80px 10%;
+            min-height: 100vh;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .page-section.active-section {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Section Styling */
+        .hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #e63946; /* Updated to Red */
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Moving Images / Carousel Section */
+        .slider-container {
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 100%;
+            height: 350px;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Inspirational Quotes Box */
+        .quote-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-left: 5px solid #e63946; /* Updated to Red */
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        /* Cards and Grids for Info/About */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #e63946; /* Updated to Red */
+        }
+
+        .card h3 {
+            color: #e63946; /* Updated to Red */
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        /* Quiz Box Styling */
+        .quiz-section {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #e63946;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .quiz-section h3 {
+            color: #e63946;
+            margin-bottom: 15px;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+        }
+
+        .quiz-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px 5px 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quiz-btn:hover {
+            background: #e63946;
+        }
+
+        #quiz-result {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        /* Links Page Style */
+        .link-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .link-list li {
+            margin-bottom: 15px;
+        }
+
+        .link-list a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #e63946; /* Updated to Red */
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .link-list a:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* Contact Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        input, textarea {
+            padding: 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            font-size: 16px;
+        }
+
+        button.submit-btn {
+            padding: 12px;
+            background: #e63946; /* Updated to Red */
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button.submit-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        .whatsapp-float:hover {
+            background-color: #20ba5a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Multiflex Academy</div>
+        <nav>
+            <ul>
+                <li><a onclick="switchPage('home')" class="nav-link active" id="link-home">Home</a></li>
+                <li><a onclick="switchPage('about')" class="nav-link" id="link-about">About Us</a></li>
+                <li><a onclick="switchPage('info')" class="nav-link" id="link-info">Info</a></li>
+                <li><a onclick="switchPage('links')" class="nav-link" id="link-links">Links</a></li>
+                <li><a onclick="switchPage('contact')" class="nav-link" id="link-contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HOME SECTION -->
+       <marquee behavior="alternate" direction="right"><p>Our motto: Nuturing Creative Minds!!!!!</p></marquee>
+    <section id="home" class="page-section active-section">
+        <div class="hero">
+            <h1>Welcome to Multiflex Learning Academy</h1>
+            <p>Empowering young minds with flexible, modern, and limitless education. Where curiosity meets limitless achievement!</p>
+            
+            <div class="quote-box">
+                <i class="fa-solid fa-quote-left"></i> "Education is the passport to the future, for tomorrow belongs to those who prepare for it today." — Malcolm X
+            </div>
+
+            <div class="quote-box">
+                <i class="fa-solid fa-quote-left"></i> "Children must be taught how to think, not what to think." — Margaret Mead
+            </div>
+
+            <!-- 
+              HOW TO ADD YOUR OWN PICTURES FOR THE SLIDER:
+              Replace the 'src="..."' links below with your own image links or local file names (e.g., src="my-photo1.jpg")
+            -->
+            <div class="slider-container">
+                <div class="slide"><img src="mla9.jpg" alt="Students Learning"></div>
+                <div class="slide"><img src="mla8.jpg" alt="Classroom Fun"></div>
+                <div class="slide"><img src="mla7.jpg" alt="Library Activities"></div>
+                  <div class="slide"><img src="mla6.jpg" alt="Students Learning"></div>
+                <div class="slide"><img src="mla5.jpg" alt="Classroom Fun"></div>
+                <div class="slide"><img src="mla4.jpg" alt="Library Activities"></div>
+                  <div class="slide"><img src="mla1.jpg" alt="Students Learning"></div>
+                <div class="slide"><img src="mla2.jpg" alt="Classroom Fun"></div>
+                <div class="slide"><img src="mla3.jpg" alt="Library Activities"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="page-section">
+        <h2>About Multiflex Learning Academy</h2>
+        <p style="margin-top: 10px; margin-bottom: 20px;">Discover who we are and what drives our passion for education.</p>
+        
+        <div class="quote-box">
+            <i class="fa-solid fa-quote-left"></i> "Tell me and I forget, teach me and I remember, involve me and I learn." — Benjamin Franklin
+        </div>
+
+        <div class="quote-box">
+            <i class="fa-solid fa-quote-left"></i> "Every child is an artist. The problem is how to remain an artist once he grows up." — Pablo Picasso
+        </div>
+
+        <div class="grid-container">
+            <div class="card">
+                <h3><i class="fa-solid fa-bullseye"></i> Our Mission</h3>
+                <p>To cultivate dynamic learners equipped with critical thinking, creativity, and the adaptability needed to thrive in a changing world.</p>
+            </div>
+            <div class="card">
+                <h3><i class="fa-solid fa-eye"></i> Our Vision</h3>
+                <p>To be a beacon of academic excellence and holistic child development through innovative and flexible learning methodologies.</p>
+            </div>
+            <div class="card">
+                <h3><i class="fa-solid fa-heart"></i> Core Values</h3>
+                <p>Integrity, Innovation, Respect, Collaboration, and a lifelong love for exploring new concepts.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFO SECTION WITH QUIZ -->
+    <section id="info" class="page-section">
+        <h2>School Information & Programs</h2>
+        <p style="margin-top: 10px;">Everything you need to know about our schedules, classes, and offerings.</p>
+        
+        <div class="grid-container">
+            <div class="card">
+                <h3><i class="fa-solid fa-child"></i> Early Years (Pre-School)</h3>
+                <p>Play-based foundational learning designed to spark natural curiosity and social integration.</p>
+            </div>
+            <div class="card">
+                <h3><i class="fa-solid fa-book-open"></i> Primary & Secondary</h3>
+                <p>Comprehensive curricula balancing STEM, arts, sports, and moral education for total growth.</p>
+            </div>
+            <div class="card">
+                <h3><i class="fa-solid fa-clock"></i> School Hours</h3>
+                <p>Monday - Friday: 8:00 AM – 3:00 PM. Extracurricular clubs run until 4:30 PM.</p>
+            </div>
+        </div>
+
+        <!-- Fun Children's Trivia Quiz -->
+        <div class="quiz-section">
+            <h3><i class="fa-solid fa-gamepad"></i> Fun Kids & Learning Trivia Quiz!</h3>
+            <div id="quiz-container">
+                <div class="question-block">
+                    <p><strong>1. What is the main fuel for a child's brain development during play?</strong></p>
+                    <button class="quiz-btn" onclick="checkAnswer(1, 'wrong')">Sitting quietly all day</button>
+                    <button class="quiz-btn" onclick="checkAnswer(1, 'correct')">Creativity & Imagination</button>
+                    <button class="quiz-btn" onclick="checkAnswer(1, 'wrong')">Memorizing long paragraphs</button>
+                </div>
+
+                <div class="question-block">
+                    <p><strong>2. According to experts, what helps children learn best in school?</strong></p>
+                    <button class="quiz-btn" onclick="checkAnswer(2, 'correct')">Hands-on experience & involvement</button>
+                    <button class="quiz-btn" onclick="checkAnswer(2, 'wrong')">Never making mistakes</button>
+                    <button class="quiz-btn" onclick="checkAnswer(2, 'wrong')">Studying without breaks</button>
+                </div>
+            </div>
+            <div id="quiz-result"></div>
+        </div>
+    </section>
+
+    <!-- LINKS SECTION -->
+    <section id="links" class="page-section">
+        <h2>Quick Resource Links</h2>
+        <p style="margin-top: 10px;">Access useful external tools, portals, and materials quickly.</p>
+        
+        <ul class="link-list">
+            <li><a href="https://portal.example.com" target="_blank"><i class="fa-solid fa-globe"></i> Student & Parent Portal</a></li>
+            <li><a href="https://library.example.com" target="_blank"><i class="fa-solid fa-book"></i> Digital E-Library</a></li>
+            <li><a href="https://calendar.example.com" target="_blank"><i class="fa-solid fa-calendar-days"></i> Academic Calendar & Events</a></li>
+            <li><a href="https://canteen.example.com" target="_blank"><i class="fa-solid fa-utensils"></i> Weekly Meal Menu</a></li>
+        </ul>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="page-section">
+        <h2>Get in Touch With Us</h2>
+        <p style="margin-top: 10px;">Have questions? Send us a message or visit our campus!</p>
+        
+        <form onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully.');">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email Address" required>
+            <textarea rows="5" placeholder="Your Message..." required></textarea>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Page Switching Logic
+        function switchPage(pageId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active-section'));
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active-section');
+            document.getElementById('link-' + pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Moving Image Slider Script
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            if (slides[slideIndex - 1]) {
+                slides[slideIndex - 1].style.display = "block";  
+            }
+            setTimeout(showSlides, 3500);
+        }
+        showSlides();
+
+        // Quiz Logic
+        let score = 0;
+        let answeredCount = 0;
+        function checkAnswer(questionNum, status) {
+            const resultDiv = document.getElementById('quiz-result');
+            if (status === 'correct') {
+                score++;
+                resultDiv.innerHTML = "🎉 Correct! Great choice!";
+                resultDiv.style.color = "#2ecc71";
+            } else {
+                resultDiv.innerHTML = "❌ Oops! Try thinking about fun, creative learning methods.";
+                resultDiv.style.color = "#e63946";
+            }
+        }
+    </script>
+</body>
+</html>
